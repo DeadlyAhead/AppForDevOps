@@ -10,7 +10,7 @@ namespace Backend.Controllers
 {
     [Route("api/openapi/v1/tasks")]
     [ApiController]
-    public class TasksController : ControllerBase  // Исправлено на TasksController (множ. число)
+    public class TasksController : ControllerBase
     {
         private readonly AppDbContext _context;
 

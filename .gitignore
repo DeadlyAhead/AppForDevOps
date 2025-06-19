@@ -1,0 +1,61 @@
+### ASP.NET Core ###
+bin/
+obj/
+appsettings.Development.json
+*.user
+*.suo
+*.cache
+*.lock.json
+.vs/
+.vscode/
+launchSettings.json
+
+### Databases ###
+*.db
+*.sqlite
+*.bak
+*.mdf
+*.ldf
+__EFMigrationsHistory/
+
+### Secrets and environmental variables ###
+.env
+*.env
+secrets.json
+appsettings.private.json
+
+### System files ###
+.DS_Store
+Thumbs.db
+desktop.ini
+
+### Dependencies ###
+packages/
+node_modules/
+
+### Logs and temporary files ###
+logs/
+*.log
+*.tmp
+temp/
+tmp/
+
+### Builds  ###
+publish/
+out/
+*.dll
+*.exe
+*.pdb
+
+### Documentation ###
+_site/
+docs/_build/
+
+### Tests ###
+TestResults/
+coverage/
+*.coverage
+*.jfm
+
+### Exceptions for the project ###
+!/Back

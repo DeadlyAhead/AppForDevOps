@@ -1,0 +1,204 @@
+openapi: 3.0.3
+info:
+  title: To do list API
+  version: 1.0.0
+  description: API для управления задачами
+
+servers:
+  - url: http://localhost:3000/api/openapi/v1
+    description: Локал серв
+
+tags:
+  - name: Tasks
+    description: Операции с задачами
+
+
+components:
+  schemas:
+    Task:
+      type: object
+      required: [id, title, completed]
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        title:
+          type: string
+          example: "Купите молоко"
+        description:
+          type: string
+          nullable: true
+          example: "2,5%"
+        completed:
+          type: boolean
+          default: false
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: "2023-10-05T14:48:00Z"
+    TaskInput:
+      type: object
+      required: [title]
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+        completed:
+          type: boolean
+          default: false
+    TaskUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 100
+        description:
+          type: string
+          nullable: true
+        completed:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "Task not found"
+  parameters:
+    TaskIdParam:
+      name: id
+      in: path
+      description: ID задачи
+      required: true
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: Ресурс не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /tasks:
+    get:
+      tags: [Tasks]
+      summary: Получить список задач
+      description: Возвращает список всех задач с возможностью фильтрации
+      parameters:
+        - name: completed
+          in: query
+          description: Фильтр по запросу статусов
+          schema:
+            type: boolean
+          required: false
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Tasks]
+      summary: Создание новой задачи
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskInput'
+      responses:
+        '201':
+          description: Задача создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Неверные данные
+
+  /task/{id}:
+    get:
+      tags: [Tasks]
+      summary: Получение задач по id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID задачи
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Задача не найдена
+
+    patch:
+      tags: [Tasks]
+      summary: Обновить задачу
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdate'
+      responses:
+        '200':
+          description: Задача обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+    delete:
+      tags: [Tasks]
+      summary: Удаление задачи
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Задача удалена
+        '404':
+          description: Задача не найдена
+
+security:
+  - BearerAuth: []

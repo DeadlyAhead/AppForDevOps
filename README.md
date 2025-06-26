@@ -1,16 +1,28 @@
-# ToDo API Application
+# ToDo Application
 
-## Project structure
-- `Backend/` - иthe server side code is similar to ASP.NET Core
-- `API/` - documentation API in the format OpenAPI
+A full-stack task management application with an ASP.NET Core backend and a React TypeScript frontend.
 
-## How to launch the backend
+## Technologies
+- **Backend**: ASP.NET Core 9.0, Entity Framework Core, PostgreSQL
+- **Frontend**: React 18, TypeScript, Swagger Codegen
+- **Database**: PostgreSQL
+- **Infrastructure**: Docker, Docker Compose
 
-Go to the folder `Backend` and follow the instructions in [Backend/README.md](Backend/README.md)
+## Launching the app
 
-## Documentation API
-[OpenAPI спецификация](API/openapi.yaml)
+### Requirements
+- Docker
+- Docker Compose
 
-To view the interactive documentation:
-1. Запустите бэкенд
-2. Откройте http://localhost:5235/swagger
+### Instructions
+1. Clone the repository:
+   git clone https://github.com/DeadlyAhead/AppForDevops.git
+   cd AppForDevops
+
+2. Launch the app:
+   docker-compose up --build -d
+
+3. Open the app:
+
+   Frontend: http://localhost:3001
+   Backend (Swagger): http://localhost:5235/swagger

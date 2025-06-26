@@ -31,6 +31,15 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "To do list API", Version = "v1" });
 });
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 
 var app = builder.Build();
@@ -48,11 +57,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "To do list API v1"));
 }
 
-app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run();
+app.UseCors("AllowAll");
+
+app.Run("http://*:5235");
 
 //var summaries = new[]
 //{

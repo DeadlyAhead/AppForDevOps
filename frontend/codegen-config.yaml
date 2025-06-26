@@ -1,0 +1,7 @@
+generatorName: typescript-axios
+inputSpec: http://localhost:5235/swagger/v1/swagger.json
+outputDir: ./src/api
+additionalProperties:
+  withSeparateModelsAndApi: true
+  apiPackage: apis
+  modelPackage: models

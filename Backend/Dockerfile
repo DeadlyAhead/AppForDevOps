@@ -7,7 +7,6 @@ RUN dotnet restore "Backend/Backend.csproj"
 COPY Backend/ Backend/
 WORKDIR /src/Backend
 RUN dotnet publish "Backend.csproj" -c Release -o /app/publish
-EXPOSE 5000
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app

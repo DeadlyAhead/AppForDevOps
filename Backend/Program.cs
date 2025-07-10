@@ -10,7 +10,7 @@ var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "todo";
 var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "12345";
 
-var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPassword}";
+var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPassword};Include Error Recovery=True";
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => 
@@ -40,7 +40,7 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "To do list 
 // Database migration
 using (var scope = app.Services.CreateScope())
 {
-    await Task.Delay(5000);
+    await Task.Delay(30000);
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
 }

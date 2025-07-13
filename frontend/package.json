@@ -11,6 +11,7 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",
@@ -22,9 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
- "codegen": "openapi-generator-cli generate -c codegen-config.yaml",
-  "codegen:watch": "nodemon --watch http://localhost:5235/swagger/v1/swagger.json --exec npm run codegen",
-  "start": "react-scripts start"
+    "codegen": "openapi-generator-cli generate -c codegen-config.yaml",
+    "codegen:watch": "nodemon --watch http://localhost:5235/swagger/v1/swagger.json --exec npm run codegen"
   },
   "eslintConfig": {
     "extends": [

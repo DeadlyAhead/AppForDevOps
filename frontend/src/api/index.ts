@@ -14,7 +14,7 @@
 
 import { Configuration } from './configuration';
 const config = new Configuration({
-  basePath: 'http://localhost:5235/api/openapi/v1'
+  basePath: ''
 });
 
 export * from "./api";

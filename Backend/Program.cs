@@ -4,13 +4,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration from ENV
-var dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? "db";
-var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
-var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "todo";
-var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
-var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "12345";
-
-var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPassword}";
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => 

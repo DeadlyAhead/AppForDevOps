@@ -38,7 +38,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "To do list API v1"));
 
-Database migration
+// Database migration
 using (var scope = app.Services.CreateScope())
 {
     await Task.Delay(5000);

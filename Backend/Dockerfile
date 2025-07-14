@@ -10,7 +10,11 @@ RUN dotnet publish "Backend.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 
-RUN apt-get update && apt-get install -y curl libpq5 && rm -rf /var/lib/apt/lists/*
+RUN if command -v apt-get >/dev/null; then \
+        apt-get update && apt-get install -y curl libpq5 ca-certificates && rm -rf /var/lib/apt/lists/*; \
+    elif command -v yum >/dev/null; then \
+        yum install -y curl postgresql-libs ca-certificates && yum clean all; \
+    fi
 
 WORKDIR /app
 COPY --from=build /app/publish .

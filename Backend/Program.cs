@@ -38,13 +38,13 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "To do list API v1"));
 
-// Database migration
-// using (var scope = app.Services.CreateScope())
-// {
-//     await Task.Delay(5000);
-//     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//     db.Database.Migrate();
-// }
+Database migration
+using (var scope = app.Services.CreateScope())
+{
+    await Task.Delay(5000);
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 app.UseRouting();
 app.UseCors("AllowAll");

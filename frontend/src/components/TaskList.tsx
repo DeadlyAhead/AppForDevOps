@@ -13,7 +13,7 @@ const TaskList = () => {
   
   // API configuration with the correct base URL
   const config = new Configuration({
-    basePath: process.env.REACT_APP_API_URL || 'http://localhost:5235'
+    basePath: process.env.REACT_APP_API_URL || ''
   });
   
   const api = new TasksApi(config);

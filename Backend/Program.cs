@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Configuration from ENV
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseNpgsql(connectionString));
 builder.Services.AddControllers();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { TasksApi } from '../api/apis/tasks-api';
 import { TaskResponse, TaskCreateRequest, TaskUpdateRequest } from '../api/models';
 import { Configuration } from '../api/configuration';
@@ -12,11 +12,12 @@ const TaskList = () => {
   });
   
   // API configuration with the correct base URL
+const api = useMemo(() => {
   const config = new Configuration({
     basePath: process.env.REACT_APP_API_URL || ''
   });
-  
-  const api = new TasksApi(config);
+  return new TasksApi(config);
+}, []);
 
   // A function for uploading tasks
   const fetchTasks = useCallback(async () => {

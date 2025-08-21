@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  dockerRegistryServiceConnection: 'DockerHubConnection' 
+  dockerRegistryServiceConnection: 'DockerСonnectionService' 
   dockerHubNamespace: 'FluffuWork'          
   backendImageName: 'todo-backend'
   frontendImageName: 'todo-frontend'

@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  dockerRegistryServiceConnection: 'DockerСonnectionService' 
+  dockerRegistryServiceConnection: 'DockerConnectionService' 
   dockerHubNamespace: 'FluffyWork'          
   backendImageName: 'todo-backend'
   frontendImageName: 'todo-frontend'
@@ -24,7 +24,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: '$(dockerHubNamespace)/$(backendImageName)'
         command: 'buildAndPush'
-        Dockerfile: '**/backend/Dockerfile'
+        Dockerfile: '**/Backend/Dockerfile'
         tags: '$(tag)'
     - task: Docker@2
       displayName: Build and Push Frontend

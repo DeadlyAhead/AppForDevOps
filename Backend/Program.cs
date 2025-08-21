@@ -1,4 +1,5 @@
 using Backend.Data;
+using Prometheus;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline
 app.UseSwagger();
+app.UseMetricServer();
+app.UseHttpMetrics();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "To do list API v1"));
 
 //Database migrations

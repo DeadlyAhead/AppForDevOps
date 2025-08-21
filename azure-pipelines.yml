@@ -9,7 +9,7 @@ variables:
   tag: 'latest'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: MyLocalAgents
 
 stages:
 - stage: Build

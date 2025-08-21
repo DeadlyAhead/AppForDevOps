@@ -1,0 +1,36 @@
+trigger:
+- main
+
+variables:
+  dockerRegistryServiceConnection: 'DockerHubConnection' 
+  dockerHubNamespace: 'FluffuWork'          
+  backendImageName: 'todo-backend'
+  frontendImageName: 'todo-frontend'
+  tag: 'latest'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and Push Docker images
+  jobs:
+  - job: BuildAndPush
+    displayName: Build and Push
+    steps:
+    - task: Docker@2
+      displayName: Build and Push Backend
+      inputs:
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: '$(dockerHubNamespace)/$(backendImageName)'
+        command: 'buildAndPush'
+        Dockerfile: '**/backend/Dockerfile'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: Build and Push Frontend
+      inputs:
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: '$(dockerHubNamespace)/$(frontendImageName)'
+        command: 'buildAndPush'
+        Dockerfile: '**/frontend/Dockerfile'
+        tags: '$(tag)'

@@ -3,7 +3,7 @@ trigger:
 
 variables:
   dockerRegistryServiceConnection: 'DockerСonnectionService' 
-  dockerHubNamespace: 'FluffuWork'          
+  dockerHubNamespace: 'FluffyWork'          
   backendImageName: 'todo-backend'
   frontendImageName: 'todo-frontend'
   tag: 'latest'

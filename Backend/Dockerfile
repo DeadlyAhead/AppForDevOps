@@ -20,6 +20,6 @@ RUN if command -v apt-get >/dev/null; then \
     fi
 
 WORKDIR /app
-COPY --from=build /src/Backend/app/publish .
+COPY --from=build /app/publish .
 
 ENTRYPOINT ["dotnet", "Backend.dll"]

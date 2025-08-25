@@ -1,14 +1,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-WORKDIR /src/Backend
 COPY Backend/Backend.sln .
-COPY Backend/Backend.csproj .
+COPY Backend/Backend.csproj Backend/
+
 RUN dotnet restore "Backend.sln"
 
-COPY Backend/. .
+COPY Backend/. Backend/
 
-RUN dotnet publish "Backend.csproj" -c Release -o /app/publish
+WORKDIR "/src/Backend"
+RUN dotnet publish "Backend.csproj" -c Release -o /app/publish --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 

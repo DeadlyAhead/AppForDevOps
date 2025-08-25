@@ -3,9 +3,8 @@ WORKDIR /src
 
 COPY Backend/ ./Backend/
 
-WORKDIR /src/Backend
 RUN dotnet restore "Backend.sln"
-RUN dotnet publish "Backend.csproj" -c Release -o /app/publish
+RUN dotnet publish "Backend.csproj" -c Release -o /app/publish --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 

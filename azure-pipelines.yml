@@ -36,6 +36,7 @@ stages:
         repository: '$(dockerHubNamespace)/$(backendImageName)'
         command: 'buildAndPush'
         Dockerfile: '**/Backend/Dockerfile'
+        buildContext: '$(Build.Repository.LocalPath)'
         tags: |
           $(SetDockerTag.dockerTag)
           latest

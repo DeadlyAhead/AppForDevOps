@@ -1,5 +1,7 @@
 trigger:
-- main
+  tags:
+    include:
+    - v*
 
 variables:
   dockerRegistryServiceConnection: 'DockerConnectionService' 

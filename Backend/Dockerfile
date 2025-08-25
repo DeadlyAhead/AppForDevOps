@@ -1,10 +1,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
+COPY Backend.sln .
 COPY Backend/Backend.csproj Backend/
-RUN dotnet restore "Backend/Backend.csproj"
 
-COPY Backend/. Backend/
+RUN dotnet restore "Backend.sln"
+
+COPY . .
 
 WORKDIR "/src/Backend"
 RUN dotnet publish "Backend.csproj" -c Release -o /app/publish
@@ -24,4 +26,5 @@ RUN if command -v apt-get >/dev/null; then \
 
 WORKDIR /app
 COPY --from=build /app/publish .
+
 ENTRYPOINT ["dotnet", "Backend.dll"]

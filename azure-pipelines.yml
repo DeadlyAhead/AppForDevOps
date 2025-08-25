@@ -9,7 +9,7 @@ variables:
   tag: 'latest'
 
 pool:
-   name: MyLocalAgent
+   name: MyLocalAgents
 
 stages:
 - stage: Build

@@ -19,7 +19,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Backend/Dockerfile.local
+      dockerfile: Backend/Dockerfile
     container_name: backend
     depends_on:
       db:

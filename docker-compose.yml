@@ -25,20 +25,14 @@ services:
       db:
         condition: service_healthy
     environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: todo
-      DB_USER: postgres
-      DB_PASSWORD: 12345
-      ASPNETCORE_URLS: "http://+:5235" 
+      ASPNETCORE_URLS: "http://+:5235"
+      DB_CONNECTION_STRING: "Host=db;Port=5432;Database=todo;Username=postgres;Password=12345"
     ports:
       - "5235:5235"
     networks:
       - app-network
 
   frontend:
-    environment:
-    - REACT_APP_API_URL=http://backend:5235/api/openapi/v1
     build:
       context: ./frontend
       dockerfile: Dockerfile

@@ -14,7 +14,7 @@ const TaskList = () => {
   // API configuration with the correct base URL
 const api = useMemo(() => {
   const config = new Configuration({
-    basePath: process.env.REACT_APP_API_URL || ''
+    basePath: ''
   });
   return new TasksApi(config);
 }, []);

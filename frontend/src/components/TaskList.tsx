@@ -74,7 +74,7 @@ const api = useMemo(() => {
       <h1 style={{ textAlign: 'center', color: '#333' }}>Todo App</h1>
       <h2 style={{ borderBottom: '1px solid #eee', paddingBottom: '10px' }}>Task List</h2>
       
-      {/* Форма создания задачи */}
+      {/* Creation task form */}
       <div style={{ 
         backgroundColor: '#f8f9fa', 
         padding: '20px', 

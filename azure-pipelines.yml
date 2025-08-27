@@ -55,15 +55,10 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          # Запускаем GitVersion и сохраняем его вывод в JSON-файл
-          dotnet-gitversion /output buildserver /nofetch
-          
-          # Загружаем переменные, которые создал GitVersion
+          dotnet-gitversion /output buildserver /output json /nofetch
           $json = Get-Content "gitversion.json" -Raw | ConvertFrom-Json
           $semVer = $json.SemVer
           Write-Host "GitVersion calculated SemVer: $semVer"
-          
-          # Устанавливаем переменную для использования в следующих шагах
           Write-Host "##vso[task.setvariable variable=GitVersion.SemVer]$semVer"
 
     - task: Docker@2

@@ -39,10 +39,29 @@ stages:
         workingDir: 'frontend'
         customCommand: 'test -- --watchAll=false'
 
-    - task: GitVersion@5
+    - task: DotNetCoreCLI@2
+      displayName: 'Install GitVersion Tool'
+      inputs:
+        command: 'custom'
+        custom: 'tool'
+        arguments: 'install --global GitVersion.Tool'
+
+    - task: PowerShell@2
+      name: 'RunGitVersion'
       displayName: 'Calculate Application Version'
       inputs:
-        useConfigFile: false
+        targetType: 'inline'
+        script: |
+          # Запускаем GitVersion и сохраняем его вывод в JSON-файл
+          dotnet-gitversion /output buildserver /nofetch
+          
+          # Загружаем переменные, которые создал GitVersion
+          $json = Get-Content "gitversion.json" -Raw | ConvertFrom-Json
+          $semVer = $json.SemVer
+          Write-Host "GitVersion calculated SemVer: $semVer"
+          
+          # Устанавливаем переменную для использования в следующих шагах
+          Write-Host "##vso[task.setvariable variable=GitVersion.SemVer]$semVer"
 
     - task: Docker@2
       displayName: 'Build and Push Backend'

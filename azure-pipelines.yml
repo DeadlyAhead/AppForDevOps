@@ -55,11 +55,10 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          dotnet-gitversion /output buildserver /output json /nofetch
-          $json = Get-Content "gitversion.json" -Raw | ConvertFrom-Json
-          $semVer = $json.SemVer
+          $gitversionOutput = dotnet-gitversion /nofetch | ConvertFrom-Json
+          $semVer = $gitversionOutput.SemVer
           Write-Host "GitVersion calculated SemVer: $semVer"
-          Write-Host "##vso[task.setvariable variable=GitVersion.SemVer]$semVer"
+          Write-Host "##vso[task.setvariable variable=GitVersion.SemVer;isOutput=true]$semVer"
 
     - task: Docker@2
       displayName: 'Build and Push Backend'

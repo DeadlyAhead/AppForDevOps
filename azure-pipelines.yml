@@ -35,9 +35,9 @@ stages:
     - task: Npm@1
       displayName: 'Run Frontend Tests'
       inputs:
-        command: 'test'
+        command: 'custom'
         workingDir: 'frontend'
-        customCommand: '-- --watchAll=false'
+        customCommand: 'test -- --watchAll=false'
 
     - task: GitVersion@5
       displayName: 'Calculate Application Version'

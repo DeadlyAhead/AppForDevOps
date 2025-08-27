@@ -21,10 +21,17 @@ stages:
     steps:
 
     - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet Packages'
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+
+    - task: DotNetCoreCLI@2
       displayName: 'Run Backend Tests'
       inputs:
         command: 'test'
         projects: '**/Backend.Tests.csproj'
+        arguments: '--no-restore'
 
     - task: Npm@1
       displayName: 'Install Frontend Dependencies'

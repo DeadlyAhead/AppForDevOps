@@ -69,7 +69,7 @@ stages:
         Dockerfile: '**/Backend/Dockerfile'
         buildContext: '$(Build.Repository.LocalPath)'
         tags: |
-          $(GitVersion.SemVer)
+          $(RunGitVersion.GitVersion.SemVer)
           latest
 
     - task: Docker@2
@@ -80,5 +80,5 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/frontend/Dockerfile'
         tags: |
-          $(GitVersion.SemVer)
+          $(RunGitVersion.GitVersion.SemVer)
           latest

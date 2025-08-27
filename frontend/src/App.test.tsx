@@ -2,8 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders main app header', () => {
+test('renders main app container', () => {
   render(<App />);
-  const headerElement = screen.getByRole('heading', { name: /Todo App/i, level: 1 });
-  expect(headerElement).toBeInTheDocument();
+  const appHeader = screen.getByRole('banner');
+  expect(appHeader).toBeInTheDocument();
+  expect(appHeader).toHaveClass('App-header');
 });

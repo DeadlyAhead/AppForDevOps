@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { TasksApi } from '../api/apis/tasks-api';
 import { TaskResponse, TaskCreateRequest, TaskUpdateRequest } from '../api/models';
 import { Configuration } from '../api/configuration';
+import './TaskList.css';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
@@ -10,19 +11,17 @@ const TaskList = () => {
     description: '',
     completed: false
   });
-  
-  // API configuration with the correct base URL
-const api = useMemo(() => {
-  const config = new Configuration({
-    basePath: ''
-  });
-  return new TasksApi(config);
-}, []);
 
-  // A function for uploading tasks
+  const api = useMemo(() => {
+    const config = new Configuration({
+      basePath: ''
+    });
+    return new TasksApi(config);
+  }, []);
+
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await api.apiOpenapiV1TasksGet(); 
+      const response = await api.apiOpenapiV1TasksGet();
       setTasks(response.data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -33,24 +32,21 @@ const api = useMemo(() => {
     fetchTasks();
   }, [fetchTasks]);
 
-  // Creating an issue
   const handleCreateTask = async () => {
+    if (!newTask.title) return;
     try {
-      await api.apiOpenapiV1TasksPost(newTask); 
-      
+      await api.apiOpenapiV1TasksPost(newTask);
       setNewTask({ title: '', description: '', completed: false });
-      
       await fetchTasks();
     } catch (error) {
       console.error('Error creating task:', error);
     }
   };
 
-  // Switching task status
   const handleToggleStatus = async (id: number, currentStatus: boolean) => {
     try {
       await api.apiOpenapiV1TasksIdPatch(
-        id, 
+        id,
         { completed: !currentStatus } as TaskUpdateRequest
       );
       await fetchTasks();
@@ -59,7 +55,6 @@ const api = useMemo(() => {
     }
   };
 
-  // Deleting an issue
   const handleDeleteTask = async (id: number) => {
     try {
       await api.apiOpenapiV1TasksIdDelete(id);
@@ -70,139 +65,67 @@ const api = useMemo(() => {
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>Todo App</h1>
-      <h2 style={{ borderBottom: '1px solid #eee', paddingBottom: '10px' }}>Task List</h2>
+    <div className="task-list-container">
+      <h1 className="main-title">Todo App</h1> {}
       
-      {/* Creation task form */}
-      <div style={{ 
-        backgroundColor: '#f8f9fa', 
-        padding: '20px', 
-        borderRadius: '8px',
-        marginBottom: '30px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
+      <div className="task-form">
         <h3>Create New Task</h3>
-        <div style={{ marginBottom: '15px' }}>
-          <input
-            type="text"
-            placeholder="Task title"
-            value={newTask.title}
-            onChange={(e) => setNewTask({...newTask, title: e.target.value})}
-            style={{ 
-              width: '100%', 
-              padding: '10px',
-              fontSize: '16px',
-              border: '1px solid #ddd',
-              borderRadius: '4px'
-            }}
-          />
-        </div>
-        
-        <div style={{ marginBottom: '15px' }}>
-          <textarea
-            placeholder="Task description"
-            value={newTask.description || ''}
-            onChange={(e) => setNewTask({...newTask, description: e.target.value})}
-            style={{ 
-              width: '100%', 
-              height: '80px',
-              padding: '10px',
-              fontSize: '16px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              resize: 'vertical'
-            }}
-          />
-        </div>
-        
-        <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center' }}>
-          <label style={{ marginRight: '10px' }}>
+        <input
+          type="text"
+          placeholder="Task title"
+          value={newTask.title}
+          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+          className="task-input"
+        />
+        <textarea
+          placeholder="Task description"
+          value={newTask.description || ''}
+          onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+          className="task-textarea"
+        />
+        <div className="task-form-actions">
+          <label className="checkbox-label"> {}
             <input
               type="checkbox"
               checked={newTask.completed}
-              onChange={(e) => setNewTask({...newTask, completed: e.target.checked})}
-              style={{ marginRight: '5px' }}
+              onChange={(e) => setNewTask({ ...newTask, completed: e.target.checked })}
             />
             Completed
           </label>
+          <button onClick={handleCreateTask} className="add-task-btn">
+            Add Task
+          </button>
         </div>
-        
-        <button 
-          onClick={handleCreateTask}
-          style={{ 
-            padding: '10px 20px',
-            background: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}
-        >
-          Add Task
-        </button>
       </div>
 
-      {/* Task list */}
+      <h2 className="task-list-header">Your Tasks</h2> {}
       {tasks.length === 0 ? (
-        <p style={{ textAlign: 'center', color: '#666' }}>No tasks found. Create your first task!</p>
+        <p className="no-tasks-message">No tasks found. Create your first task!</p>
       ) : (
-        <ul style={{ listStyleType: 'none', padding: 0 }}>
+        <ul className="task-list">
           {tasks.map(task => (
-            <li 
-              key={task.id} 
-              style={{ 
-                backgroundColor: '#fff',
-                padding: '15px',
-                marginBottom: '15px',
-                borderRadius: '8px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                borderLeft: `4px solid ${task.completed ? '#4CAF50' : '#ff9800'}`
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
-                  <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>
-                    {task.title}
-                  </h3>
-                  <p style={{ margin: '0 0 10px 0', color: '#666' }}>
-                    {task.description || 'No description'}
-                  </p>
-                </div>
-                <div>
-                  <button 
-                    onClick={() => handleDeleteTask(task.id!)}
-                    style={{ 
-                      background: '#f44336',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px',
-                      padding: '5px 10px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
+            <li key={task.id} className={`task-item ${task.completed ? 'completed' : ''}`}> {}
+              <div className="task-item-content">
+                <h3>{task.title}</h3>
+                <p>{task.description || 'No description'}</p>
               </div>
-              
-              <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                <label style={{ marginRight: '15px', display: 'flex', alignItems: 'center' }}>
+              <div className="task-item-actions">
+                <button onClick={() => handleDeleteTask(task.id!)} className="delete-btn">
+                  Delete
+                </button>
+                <label className="status-toggle-btn"> {}
                   <input
                     type="checkbox"
                     checked={task.completed || false}
                     onChange={() => handleToggleStatus(task.id!, task.completed!)}
-                    style={{ marginRight: '5px' }}
+                    style={{ display: 'none' }}
                   />
-                  {task.completed ? 'Completed' : 'Pending'}
+                  {task.completed ? 'Done' : 'Mark as Done'} {}
                 </label>
-                
-                <span style={{ color: '#888', fontSize: '14px' }}>
-                  Created: {task.createdAt ? new Date(task.createdAt).toLocaleString() : 'N/A'}
-                </span>
               </div>
+              <span className="timestamp">
+                Created: {task.createdAt ? new Date(task.createdAt).toLocaleString() : 'N/A'}
+              </span>
             </li>
           ))}
         </ul>

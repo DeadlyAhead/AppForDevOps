@@ -45,11 +45,21 @@
     ]
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.20.2"
+    "@openapitools/openapi-generator-cli": "^2.20.2",
+    "jest-junit": "^16.0.0"
   },
     "jest": {
     "transformIgnorePatterns": [
       "node_modules/(?!axios)"
     ]
+  },
+  "jest-junit": {
+  "outputDirectory": "reports",
+  "outputName": "jest-junit.xml",
+  "ancestorSeparator": " › ",
+  "uniqueOutputName": "false",
+  "suiteNameTemplate": "{filepath}",
+  "classNameTemplate": "{classname}",
+  "titleTemplate": "{title}"
   }
 }

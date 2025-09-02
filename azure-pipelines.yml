@@ -24,19 +24,11 @@ stages:
       fetchDepth: '0'
 
     - task: DotNetCoreCLI@2
-      displayName: 'Run Backend Tests'
+      displayName: 'Run and Publish Backend Tests'
       inputs:
         command: 'test'
         projects: '**/*.sln'
-        arguments: '--logger "trx;LogFileName=$(Build.ArtifactStagingDirectory)/backend-test-results.trx"'
-
-    - task: PublishTestResults@2
-      displayName: 'Publish Backend Test Results'
-      inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '$(Build.ArtifactStagingDirectory)/backend-test-results.trx'
-        mergeTestResults: true
-        failTaskOnFailedTests: true
+        publishTestResults: true
 
     - task: Npm@1
       displayName: 'Install Frontend Dependencies'
